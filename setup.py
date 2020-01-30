@@ -19,6 +19,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.6",
-    install_requires=["pyyaml>=5.1"],
-    entry_points={"console_scripts": ["bookmgr = bookmgr:main"],},
+    install_requires=["pyyaml>=5.1", "Click"],
+    entry_points={"console_scripts": ["bookmgr = bookmgr.cli:cli"],},
 )
