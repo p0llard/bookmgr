@@ -1,5 +1,7 @@
 import os
 
+import click
+
 from yaml import load, dump
 
 try:
@@ -12,10 +14,7 @@ def create_categories(categories):
     for category in categories:
         path = os.path.abspath(category)
 
-        if not os.path.isdir(path) and os.path.exists(path):
-            print("Category is a file")
-
-        else:
+        if os.path.isdir(path) or not os.path.exists(path):
             os.makedirs(path, exist_ok=True)
 
 
@@ -31,7 +30,7 @@ def build_links(name, path, categories):
         try:
             os.symlink(path, link_path)
         except FileExistsError:
-            print("Link already present")
+            pass
 
 
 def deploy_book(path):
@@ -49,7 +48,7 @@ def deploy_book(path):
             build_links(name, path, categories)
 
     except TypeError as error:
-        print("Failed to parse index card for book")
+        click.echo("Failed to parse index card for book", err=True)
 
     except IOError as error:
-        print("Failed to find index card for book")
+        click.echo("Failed to find index card for book", err=True)
